@@ -42,7 +42,7 @@ int main()
 		5 hlt()
 		other nop()
 		*/
-		cout << "DEBUG: executionPointer = " << executionPointer << ", mainMemory[executionPointer] = " << mainMemory[executionPointer] << endl;
+		//cout << "DEBUG: executionPointer = " << executionPointer << ", mainMemory[executionPointer] = " << mainMemory[executionPointer] << endl;
 		switch(mainMemory[executionPointer]) {
 			case 0: //reset
 				resetMachine();
