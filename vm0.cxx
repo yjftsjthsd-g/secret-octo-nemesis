@@ -26,7 +26,9 @@ int main()
 	mainMemory[0] = 1;	//mov
 	mainMemory[1] = 0;	//a
 	mainMemory[2] = 13;	//13
-	mainMemory[3] = 13;
+	mainMemory[3] = 3;	//out
+	mainMemory[4] = 2;	//mainMemory[2]
+	mainMemory[5] = 5;	//hlt
 
 	//main loop
 	while(executionPointer < MEMSIZE) {
@@ -38,20 +40,23 @@ int main()
 		3 out(addr)
 		4 jmp(addr)
 		5 hlt()
+		other nop()
 		*/
+		cout << "DEBUG: executionPointer = " << executionPointer << ", mainMemory[executionPointer] = " << mainMemory[executionPointer] << endl;
 		switch(mainMemory[executionPointer]) {
 			case 0: //reset
 				resetMachine();
 				break;
 			case 1: //mov(var, val)
 				reg[mainMemory[executionPointer + 1]] = mainMemory[executionPointer + 2];
-				executionPointer += 2;
+				executionPointer += 2; //skip arguments
 				break;
 			case 2: //in(addr)
 				mainMemory[executionPointer+1] = 0; //TODO
 				break;
 			case 3: //out(addr)
-				cout << mainMemory[executionPointer+1] << endl;
+				cout << mainMemory[mainMemory[executionPointer+1]] << endl;
+				executionPointer += 1; //skip argument
 				break;
 			case 4: //jmp(addr)
 				executionPointer = mainMemory[executionPointer+1] - 1;
@@ -59,8 +64,7 @@ int main()
 			case 5: //hlt()
 				executionPointer = MEMSIZE + 1;
 				break;
-			default:
-				//do nothing
+			default: //nop()
 				break;
 		}
 		executionPointer++;
