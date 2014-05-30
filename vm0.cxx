@@ -1,12 +1,13 @@
 //first virtual machine
-//by Brian Cole, 2014-05-30
+//by Brian Cole, started 2014-05-30
 
 #include <iostream>
 using namespace std;
 
-//int a, b, c, d, e; //general purpose registers
+#define MEMSIZE 100
+
 int reg[10]; //general purpose registers
-int mainMemory[100];
+int mainMemory[MEMSIZE];
 int executionPointer;
 
 void resetMachine()
@@ -15,7 +16,6 @@ void resetMachine()
 	for(int i = 0; i < 10; i++) {
 		reg[i] = 0;
 	}
-	//a = b = c = d = e = 0;
 }
 
 int main()
@@ -29,7 +29,7 @@ int main()
 	mainMemory[3] = 13;
 
 	//main loop
-	while(executionPointer < 100) { //TODO should do MEMSIZE or such
+	while(executionPointer < MEMSIZE) {
 		/*
 		opcodes:
 		0 reset()
@@ -57,7 +57,7 @@ int main()
 				executionPointer = mainMemory[executionPointer+1] - 1;
 				break;
 			case 5: //hlt()
-				executionPointer = 101; //TODO change this with MEMSIZE
+				executionPointer = MEMSIZE + 1;
 				break;
 			default:
 				//do nothing
