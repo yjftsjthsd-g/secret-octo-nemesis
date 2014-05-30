@@ -1,0 +1,4 @@
+#vim swap file(s)
+*.swp
+#output
+vm0
