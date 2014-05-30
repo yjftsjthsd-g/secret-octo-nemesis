@@ -2,15 +2,16 @@
 //by Brian Cole, 2014-05-30
 
 #include <iostream>
+using namespace std;
 
 //int a, b, c, d, e; //general purpose registers
 int reg[10]; //general purpose registers
 int mainMemory[100];
-int nextInstruction;
+int executionPointer;
 
 void resetMachine()
 {
-	nextInstruction = 0;
+	executionPointer = 0;
 	for(int i = 0; i < 10; i++) {
 		reg[i] = 0;
 	}
@@ -28,7 +29,7 @@ int main()
 	mainMemory[3] = 13;
 
 	//main loop
-	while(nextInstruction < 100) { //TODO should do MEMSIZE or such
+	while(executionPointer < 100) { //TODO should do MEMSIZE or such
 		/*
 		opcodes:
 		0 reset()
@@ -38,23 +39,31 @@ int main()
 		4 jmp(addr)
 		5 hlt()
 		*/
-		switch(mainMemory[nextInstruction]) {
-			case 0:
+		switch(mainMemory[executionPointer]) {
+			case 0: //reset
 				resetMachine();
 				break;
-			case 1:
-				reg[mainMemory[nextInstruction+1]] = mainMemory[nextInstruction+2];
-				nextInstruction += 2;
+			case 1: //mov(var, val)
+				reg[mainMemory[executionPointer + 1]] = mainMemory[executionPointer + 2];
+				executionPointer += 2;
 				break;
-			case 2:
-				mainMemory[nextInstruction+1] = 0; //TODO
+			case 2: //in(addr)
+				mainMemory[executionPointer+1] = 0; //TODO
 				break;
-			case 3:
-				cout << mainMemory[nextInstruction+1] << endl;
+			case 3: //out(addr)
+				cout << mainMemory[executionPointer+1] << endl;
+				break;
+			case 4: //jmp(addr)
+				executionPointer = mainMemory[executionPointer+1] - 1;
+				break;
+			case 5: //hlt()
+				executionPointer = 101; //TODO change this with MEMSIZE
 				break;
 			default:
 				//do nothing
+				break;
 		}
+		executionPointer++;
 	}
 	return 0;
-
+}
