@@ -1,4 +1,4 @@
 My first attempt to write a virtual machine.
-Currently loads with a program preloaded in memory; that'll soon be replaced by letting the user type in code or load from a file.
+Currently loads with a program preloaded in memory or loads memory image file spec'd at command line.
 
 The VM currently uses a 100-item main memory (for both code and data), and 10 general purpose registers.

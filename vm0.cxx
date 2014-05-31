@@ -2,12 +2,13 @@
 //by Brian Cole, started 2014-05-30
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #define MEMSIZE 100
 
-int reg[10]; //general purpose registers
-int mainMemory[MEMSIZE];
+char reg[10]; //general purpose registers
+char mainMemory[MEMSIZE];
 int executionPointer;
 
 void resetMachine()
@@ -18,17 +19,25 @@ void resetMachine()
 	}
 }
 
-int main()
+int main(int argcount, char *argvals[])
 {
 	resetMachine();
 
+	if(argcount == 1) { //no input file
 	//initialize contents of main memory
 	mainMemory[0] = 1;	//mov
 	mainMemory[1] = 0;	//a
-	mainMemory[2] = 13;	//13
+	mainMemory[2] = 66;	//'B'
 	mainMemory[3] = 3;	//out
 	mainMemory[4] = 2;	//mainMemory[2]
 	mainMemory[5] = 5;	//hlt
+	} else { //input file
+		ifstream inputFile;
+		inputFile.open(argvals[1], ios::in | ios::binary); //open the spec'd file in binary+input mode
+		//example code at http://www.cplusplus.com/doc/tutorial/files/ also had file.seekg(0, ios::beg); here
+		inputFile.read(mainMemory, 100);
+		inputFile.close();
+	}
 
 	//main loop
 	while(executionPointer < MEMSIZE) {
