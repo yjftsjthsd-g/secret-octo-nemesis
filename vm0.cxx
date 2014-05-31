@@ -35,7 +35,7 @@ int main(int argcount, char *argvals[])
 		ifstream inputFile;
 		inputFile.open(argvals[1], ios::in | ios::binary); //open the spec'd file in binary+input mode
 		//example code at http://www.cplusplus.com/doc/tutorial/files/ also had file.seekg(0, ios::beg); here
-		inputFile.read(mainMemory, 100);
+		inputFile.read(mainMemory, MEMSIZE);
 		inputFile.close();
 	}
 
